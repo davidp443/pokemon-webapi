@@ -31,6 +31,9 @@ namespace PokemonWebApi
             services.AddSingleton<IPokemonFactory>(sp => {
                 return new PokemonFactory.PokemonFactory(new PokeApiClient.PokeApiClient());
             });
+            services.AddSingleton<IPokemonTranslatedFactory>(sp => {
+                return new PokemonTranslatedFactory(new PokemonFactory.PokemonFactory(new PokeApiClient.PokeApiClient()));
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

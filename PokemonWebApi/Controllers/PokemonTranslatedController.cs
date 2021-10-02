@@ -12,7 +12,7 @@ namespace PokemonWebApi.Controllers
         private readonly ILogger<PokemonTranslatedController> _logger;
         private readonly IPokemonFactory _pokemonFactory;
 
-        public PokemonTranslatedController(ILogger<PokemonTranslatedController> logger, IPokemonFactory pokemonFactory)
+        public PokemonTranslatedController(ILogger<PokemonTranslatedController> logger, IPokemonTranslatedFactory pokemonFactory)
         {
             _logger = logger;
             _pokemonFactory = pokemonFactory;

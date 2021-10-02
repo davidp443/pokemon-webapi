@@ -13,14 +13,14 @@ namespace PokemonWebApi.Tests
     public class PokemonTranslatedControllerTests
     {
         private Moq.Mock<ILogger<PokemonTranslatedController>> _loggerMock;
-        private PokemonFactory.IPokemonFactory _pokemonFactory;
+        private PokemonFactory.IPokemonTranslatedFactory _pokemonFactory;
 
         [SetUp]
         public void TestSetup()
         {
             _loggerMock = new Moq.Mock<ILogger<PokemonTranslatedController>>();
             OfflinePokeApiClient offlinePokeApiClient = new();
-            _pokemonFactory = new PokemonFactory.PokemonFactory(offlinePokeApiClient);
+            _pokemonFactory = new PokemonFactory.PokemonTranslatedFactory(new PokemonFactory.PokemonFactory( offlinePokeApiClient));
         }
 
         [Test]
@@ -86,8 +86,7 @@ namespace PokemonWebApi.Tests
             // Arrange
             var pokeApiClientMock = new Moq.Mock<IPokeApiClient>();
             pokeApiClientMock.Setup(m => m.GetPokemonSpeciesAsync(It.IsAny<string>())).Throws(new HttpRequestException(null, null, HttpStatusCode.NotFound));
-            var sut = new PokemonTranslatedController(_loggerMock.Object, new PokemonFactory.PokemonFactory(pokeApiClientMock.Object));
-
+            var sut = new PokemonTranslatedController(_loggerMock.Object, new PokemonFactory.PokemonTranslatedFactory(new PokemonFactory.PokemonFactory(pokeApiClientMock.Object)));
 
             // Act
             var response = await sut.GetAsync("mewtwo");
