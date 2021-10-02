@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PokemonWebApi.PokeApiClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,22 +10,19 @@ namespace PokemonWebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class PokemonController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly ILogger<PokemonController> _logger;
+        private readonly IPokeApiClient _pokeApiClient;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public PokemonController(ILogger<PokemonController> logger, IPokeApiClient pokeApiClient)
         {
             _logger = logger;
+            _pokeApiClient = pokeApiClient;
         }
 
         [HttpGet]
-        public PokemonInfo Get()
+        public PokemonInfo Get(string pokemonName)
         {
             return new PokemonInfo();
         }

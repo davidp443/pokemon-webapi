@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PokemonWebApi.PokeApiClient
 {
-    interface IPokeApiClient
+    public interface IPokeApiClient
     {
     }
 }
