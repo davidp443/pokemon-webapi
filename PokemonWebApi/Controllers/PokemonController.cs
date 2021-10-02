@@ -24,9 +24,9 @@ namespace PokemonWebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<PokemonInfo> GetAsync(string pokemonName)
+        public async Task<PokemonInfo> GetAsync(string name)
         {
-            string speciesJson = await _pokeApiClient.GetPokemonSpeciesAsync(pokemonName); // TODO: Pokemon name or species name?
+            string speciesJson = await _pokeApiClient.GetPokemonSpeciesAsync(name); // TODO: Pokemon name or species name?
 
             JObject species = JObject.Parse(speciesJson);
 
@@ -34,7 +34,7 @@ namespace PokemonWebApi.Controllers
 
             return new PokemonInfo
             {
-                Name = pokemonName,
+                Name = name,
                 Description =flavorText,
                 Habitat = (string)species["habitat"]["name"],
                 IsLegendary = (bool)species["is_legendary"]

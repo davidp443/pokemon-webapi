@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokemonWebApi.PokeApiClient
 {
-    public class PokeApiClient
+    public class PokeApiClient: IPokeApiClient
     {
         private readonly HttpClient _httpClient = new();
 
