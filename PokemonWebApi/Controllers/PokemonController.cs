@@ -28,17 +28,28 @@ namespace PokemonWebApi.Controllers
         {
             string speciesJson = await _pokeApiClient.GetPokemonSpeciesAsync(name); // TODO: Pokemon name or species name?
 
+            return MapPokemonInfo(name, speciesJson);
+        }
+
+        private PokemonInfo MapPokemonInfo(string name, string speciesJson)
+        {
             JObject species = JObject.Parse(speciesJson);
-
+            string habitat = (string)species["habitat"]["name"];
             string flavorText = (string)species["flavor_text_entries"].Where(x => (string)x["language"]["name"] == "en").First()["flavor_text"];
-
+            var description = CleanFlavorText(flavorText);
+            bool isLegendary = (bool)species["is_legendary"];
             return new PokemonInfo
             {
                 Name = name,
-                Description =flavorText,
-                Habitat = (string)species["habitat"]["name"],
-                IsLegendary = (bool)species["is_legendary"]
+                Description = description,
+                Habitat = habitat,
+                IsLegendary = isLegendary
             };
+        }
+
+        private string CleanFlavorText(string flavorText)
+        {
+            return flavorText.Replace('\n', ' ').Replace('\f',' ');
         }
     }
 }
