@@ -1,16 +1,16 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["pokemon-webapi/PokemonWebApi/PokemonWebApi.csproj", "pokemon-webapi/PokemonWebApi/"]
-RUN dotnet restore "pokemon-webapi/PokemonWebApi/PokemonWebApi.csproj"
+COPY ["PokemonWebApi/PokemonWebApi.csproj", "PokemonWebApi/"]
+RUN dotnet restore "PokemonWebApi/PokemonWebApi.csproj"
 COPY . .
-WORKDIR "/src/pokemon-webapi/PokemonWebApi"
+WORKDIR "/src/PokemonWebApi"
 RUN dotnet build "PokemonWebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
