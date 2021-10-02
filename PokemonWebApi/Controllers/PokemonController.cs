@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 namespace PokemonWebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("pokemon/{name}")]
     public class PokemonController : ControllerBase
     {
         private readonly ILogger<PokemonController> _logger;
