@@ -6,13 +6,13 @@ using PokemonWebApi.PokemonFactory;
 namespace PokemonWebApi.Controllers
 {
     [ApiController]
-    [Route("pokemon/{name}")]
-    public class PokemonController : ControllerBase
+    [Route("pokemon/translated/{name}")]
+    public class PokemonTranslatedController : ControllerBase
     {
-        private readonly ILogger<PokemonController> _logger;
+        private readonly ILogger<PokemonTranslatedController> _logger;
         private readonly IPokemonFactory _pokemonFactory;
 
-        public PokemonController(ILogger<PokemonController> logger, IPokemonFactory pokemonFactory)
+        public PokemonTranslatedController(ILogger<PokemonTranslatedController> logger, IPokemonFactory pokemonFactory)
         {
             _logger = logger;
             _pokemonFactory = pokemonFactory;

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PokemonWebApi.PokeApiClient;
+using PokemonWebApi.PokemonFactory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,9 @@ namespace PokemonWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IPokeApiClient, PokeApiClient.PokeApiClient>();
+            services.AddSingleton<IPokemonFactory>(sp => {
+                return new PokemonFactory.PokemonFactory(new PokeApiClient.PokeApiClient());
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

@@ -12,8 +12,7 @@ namespace PokemonWebApi.PokeApiClient
 
         public async Task<string> GetPokemonSpeciesAsync(string name)
         {
-            var json = await _httpClient.GetStringAsync("https://pokeapi.co/api/v2/pokemon-species/" + Uri.EscapeDataString(name));
-            return json;
+            return  await _httpClient.GetStringAsync("https://pokeapi.co/api/v2/pokemon-species/" + Uri.EscapeDataString(name));
         }
     }
 }

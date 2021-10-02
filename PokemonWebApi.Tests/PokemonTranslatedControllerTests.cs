@@ -3,22 +3,22 @@ using PokemonWebApi.Controllers;
 using Microsoft.Extensions.Logging;
 using PokemonWebApi.PokeApiClient;
 using System.Threading.Tasks;
-using Moq;
-using System.Net.Http;
-using System.Net;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Net.Http;
+using Moq;
 
 namespace PokemonWebApi.Tests
 {
-    public class PokemonControllerTests
+    public class PokemonTranslatedControllerTests
     {
-        private Moq.Mock<ILogger<PokemonController>> _loggerMock;
+        private Moq.Mock<ILogger<PokemonTranslatedController>> _loggerMock;
         private PokemonFactory.IPokemonFactory _pokemonFactory;
 
         [SetUp]
         public void TestSetup()
         {
-            _loggerMock = new Moq.Mock<ILogger<PokemonController>>();
+            _loggerMock = new Moq.Mock<ILogger<PokemonTranslatedController>>();
             OfflinePokeApiClient offlinePokeApiClient = new();
             _pokemonFactory = new PokemonFactory.PokemonFactory(offlinePokeApiClient);
         }
@@ -27,7 +27,7 @@ namespace PokemonWebApi.Tests
         public async Task WhenMewtwo_returns_name()
         {
             // Arrange
-            var sut = new PokemonController(_loggerMock.Object, _pokemonFactory);
+            var sut = new PokemonTranslatedController(_loggerMock.Object, _pokemonFactory);
 
             // Act
             var response = await sut.GetAsync("mewtwo");
@@ -41,13 +41,13 @@ namespace PokemonWebApi.Tests
         public async Task WhenMewtwo_returns_description()
         {
             // Arrange
-            var sut = new PokemonController(_loggerMock.Object, _pokemonFactory);
+            var sut = new PokemonTranslatedController(_loggerMock.Object, _pokemonFactory);
 
             // Act
             var response = await sut.GetAsync("mewtwo");
 
             // Assert
-            var description = "It was created by a scientist after years of horrific gene splicing and DNA engineering experiments.";
+            var description = "Created by a scientist after years of horrific gene splicing and DNA engineering experiments, it was.";
             Assert.AreEqual(description, response.Value.Description);
         }
 
@@ -55,7 +55,7 @@ namespace PokemonWebApi.Tests
         public async Task WhenMewtwo_returns_habitat()
         {
             // Arrange
-            var sut = new PokemonController(_loggerMock.Object, _pokemonFactory);
+            var sut = new PokemonTranslatedController(_loggerMock.Object, _pokemonFactory);
 
             // Act
             var response = await sut.GetAsync("mewtwo");
@@ -69,7 +69,7 @@ namespace PokemonWebApi.Tests
         public async Task WhenMewtwo_returns_isLengendary()
         {
             // Arrange
-            var sut = new PokemonController(_loggerMock.Object, _pokemonFactory);
+            var sut = new PokemonTranslatedController(_loggerMock.Object, _pokemonFactory);
 
             // Act
             var response = await sut.GetAsync("mewtwo");
@@ -81,12 +81,13 @@ namespace PokemonWebApi.Tests
 
 
         [Test]
-        public async Task WhenUnknown_returns_404()
+        public async Task WhenUnknow_returns_404()
         {
             // Arrange
             var pokeApiClientMock = new Moq.Mock<IPokeApiClient>();
-            pokeApiClientMock.Setup(m => m.GetPokemonSpeciesAsync(It.IsAny<string>())).Throws(new HttpRequestException(null,null,HttpStatusCode.NotFound));
-            var sut = new PokemonController(_loggerMock.Object, new PokemonFactory.PokemonFactory(pokeApiClientMock.Object) );
+            pokeApiClientMock.Setup(m => m.GetPokemonSpeciesAsync(It.IsAny<string>())).Throws(new HttpRequestException(null, null, HttpStatusCode.NotFound));
+            var sut = new PokemonTranslatedController(_loggerMock.Object, new PokemonFactory.PokemonFactory(pokeApiClientMock.Object));
+
 
             // Act
             var response = await sut.GetAsync("mewtwo");
