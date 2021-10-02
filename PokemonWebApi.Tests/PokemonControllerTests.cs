@@ -2,7 +2,7 @@ using NUnit.Framework;
 
 namespace PokemonWebApi.Tests
 {
-    public class Tests
+    public class PokemonControllerTests
     {
         [SetUp]
         public void Setup()
