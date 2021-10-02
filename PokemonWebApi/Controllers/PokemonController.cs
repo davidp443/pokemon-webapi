@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PokemonWebApi.Controllers
 {
@@ -22,9 +24,21 @@ namespace PokemonWebApi.Controllers
         }
 
         [HttpGet]
-        public PokemonInfo Get(string pokemonName)
+        public async Task<PokemonInfo> GetAsync(string pokemonName)
         {
-            return new PokemonInfo();
+            string speciesJson = await _pokeApiClient.GetPokemonSpeciesAsync(pokemonName); // TODO: Pokemon name or species name?
+
+            JObject species = JObject.Parse(speciesJson);
+
+            string flavorText = (string)species["flavor_text_entries"].Where(x => (string)x["language"]["name"] == "en").First()["flavor_text"];
+
+            return new PokemonInfo
+            {
+                Name = pokemonName,
+                Description =flavorText,
+                Habitat = (string)species["habitat"]["name"],
+                IsLegendary = (bool)species["is_legendary"]
+            };
         }
     }
 }

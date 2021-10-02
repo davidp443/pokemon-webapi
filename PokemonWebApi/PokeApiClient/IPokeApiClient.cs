@@ -7,5 +7,6 @@ namespace PokemonWebApi.PokeApiClient
 {
     public interface IPokeApiClient
     {
+         Task<string> GetPokemonSpeciesAsync(string name);
     }
 }
