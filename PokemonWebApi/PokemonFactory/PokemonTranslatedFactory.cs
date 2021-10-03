@@ -1,5 +1,5 @@
-﻿using System;
-using System.Net.Http;
+﻿using PokemonWebApi.FunTranslationsClient;
+using System;
 using System.Threading.Tasks;
 
 namespace PokemonWebApi.PokemonFactory
@@ -7,17 +7,12 @@ namespace PokemonWebApi.PokemonFactory
     public class PokemonTranslatedFactory : IPokemonFactory, IPokemonTranslatedFactory
     {
         private readonly IPokemonFactory _pokemonFactory;
-        // TODO: Inject this so it can be mocked
-        private readonly HttpClient _httpClient = new();
+        private readonly IFunTranslationsClient _funTranslationsClient;
 
-        public async Task<string> GetPokemonSpeciesAsync(string name)
-        {
-            return await _httpClient.GetStringAsync("https://pokeapi.co/api/v2/pokemon-species/" + Uri.EscapeDataString(name));
-        }
-
-        public PokemonTranslatedFactory(IPokemonFactory pokemonFactory)
+        public PokemonTranslatedFactory(IPokemonFactory pokemonFactory, IFunTranslationsClient funTranslationsClient)
         {
             _pokemonFactory = pokemonFactory;
+            _funTranslationsClient = funTranslationsClient;
         }
 
         public async Task<PokemonInfo> FetchPokemonAsync(string name)
@@ -27,16 +22,25 @@ namespace PokemonWebApi.PokemonFactory
             return new PokemonInfo
             {
                 Name = pokemonInfo.Name,
-                Description = TranslateDescription(pokemonInfo.Description),
+                Description = await TranslateDescriptionAsync(pokemonInfo.Description, pokemonInfo.Habitat, pokemonInfo.IsLegendary),
                 Habitat = pokemonInfo.Habitat,
                 IsLegendary = pokemonInfo.IsLegendary
             };
 
         }
 
-        private string TranslateDescription(string rawDescription)
+        private async Task<string> TranslateDescriptionAsync(string rawDescription, string habitat, bool isLegendary)
         {
-            return "";
+            string translationType = (habitat == "cave" || isLegendary) ? "yoda" : "shakespeare";
+            try
+            {
+                return await _funTranslationsClient.TranslateAsync(translationType, rawDescription);
+            }
+            catch (Exception)
+            {
+                //TODO: We should probably be logging something
+                return rawDescription;
+            }
         }
     }
 }

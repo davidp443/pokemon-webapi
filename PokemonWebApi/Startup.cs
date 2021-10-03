@@ -1,18 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using PokemonWebApi.PokeApiClient;
+using PokemonWebApi.HttpClient;
 using PokemonWebApi.PokemonFactory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PokemonWebApi
 {
@@ -29,10 +22,15 @@ namespace PokemonWebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IPokemonFactory>(sp => {
-                return new PokemonFactory.PokemonFactory(new PokeApiClient.PokeApiClient());
+                return new PokemonFactory.PokemonFactory(
+                    new PokeApiClient.PokeApiClient(new HttpClientWrapper() )
+                );
             });
             services.AddSingleton<IPokemonTranslatedFactory>(sp => {
-                return new PokemonTranslatedFactory(new PokemonFactory.PokemonFactory(new PokeApiClient.PokeApiClient()));
+                return new PokemonTranslatedFactory(
+                    new PokemonFactory.PokemonFactory(new PokeApiClient.PokeApiClient(new HttpClientWrapper())),
+                    new FunTranslationsClient.FunTranslationsClient(new HttpClientWrapper())
+                );
             });
 
             services.AddControllers();

@@ -35,7 +35,7 @@ namespace PokemonWebApi.PokemonFactory
         }
 
 
-        private PokemonInfo MapPokemonInfo(string name, string speciesJson)
+        private static PokemonInfo MapPokemonInfo(string name, string speciesJson)
         {
             JObject species = JObject.Parse(speciesJson);
             string habitat = (string)species["habitat"]["name"];
@@ -51,7 +51,7 @@ namespace PokemonWebApi.PokemonFactory
             };
         }
 
-        private string CleanFlavorText(string flavorText)
+        private static string CleanFlavorText(string flavorText)
         {
             return flavorText.Replace('\n', ' ').Replace('\f', ' ');
         }

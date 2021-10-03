@@ -19,8 +19,8 @@ namespace PokemonWebApi.Tests
         public void TestSetup()
         {
             _loggerMock = new Moq.Mock<ILogger<PokemonController>>();
-            OfflinePokeApiClient offlinePokeApiClient = new();
-            _pokemonFactory = new PokemonFactory.PokemonFactory(offlinePokeApiClient);
+            OfflineHttpClient offlineHttpClient = new();
+            _pokemonFactory = new PokemonFactory.PokemonFactory(new PokeApiClient.PokeApiClient(offlineHttpClient));
         }
 
         [Test]
