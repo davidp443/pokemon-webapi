@@ -20,7 +20,7 @@ git clone https://github.com/davidp443/pokemon-webapi
 
 From the PokemonWebApi directory, execute:
 ```
-docker run
+dotnet run
 ```
 This will execute a Kestrel development server. 
 
