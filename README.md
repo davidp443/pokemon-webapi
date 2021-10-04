@@ -6,7 +6,7 @@ Sample Web API making a connection to pokeapi.co
 The following instructions assume your OS is Windows, Linux or MacOS.
 For windows users, instructions must be executed in git bash. If using cmd, please replace '/' with '\\' in file paths.
 
-Make sure you have the follwoing installed:
+Make sure you have the following installed:
 - a recent version of git (>2.0.0)
 - a recent version of docker (tested with Docker 20.10.8)
 - dotnet SDK installed (tested with 5.0.401)
@@ -24,7 +24,7 @@ dotnet run
 ```
 This will execute a Kestrel development server. 
 
-Using your browser (or curl/ wget), head to https://localhost:5001/pokemon/mewtwo or https://localhost:5001/pokemon/translated/mewtwo 
+Using your browser (or curl/ wget), head to https://localhost:5001/pokemon/mewtwo or https://localhost:5001/pokemon/translated/mewtwo .
 Your browser should display a security warning. Add a security exception for the self-signed certificate. 
 
 ### Run the Web API using docker
@@ -33,14 +33,14 @@ Alternately, the Web API can be ran using docker.
 
 Build the image from the root of the git repository:
 ```
-docker build -t pokemonwebapi -f PokemonWebApi/Docker file
+docker build -t pokemonwebapi -f PokemonWebApi/Dockerfile .
 ```
 
-Create and run the conatainer:
+Create and run the container:
 ```
 docker run -p 5000:80 pokemonwebapi
 ```
-Using your browser, head to http://localhost:5000/pokemon/mewtwo or https://localhost:5000/pokemon/translated/mewtwo 
+Using your browser, head to http://localhost:5000/pokemon/mewtwo or http://localhost:5000/pokemon/translated/mewtwo 
 
 ### Run the tests
 
@@ -52,11 +52,14 @@ dotnet test
 ## Anything I'd do differently for a production API
 
 ### Add a unit test layer
-The tests are currently testing the almost all the service logic. The HttpClient is stubbed, but many classes are tested at once.
-For a production system, we should add unit tests to cover more edge cases and error paths (different error codes for example, invalid response from any of the service being consumed, invalid charaters in Pokemon names...)
+We only have integration tests at the moment. The HttpClient is stubbed, but many classes are tested at once.
+For a production system, we should add unit tests to cover more edge cases and error paths. E.g.:
+- testing with different HTTP status codes
+- receiving a response from one of the API that cannot be deserialized, or doesn't contain the expected fields
+- invalid characters in Pokemon species names that we receive from the user
 
 ### Add a caching layer
-Add a caching layer in front of api.funtranslations.com and pokeapi.co
+Add a cache in front of api.funtranslations.com and pokeapi.co, this will increase availability and reduce the amount of traffic.
 
 ### Use a premium service 
 Use a paid plan for api.funtranslations.com and pokeapi.co, because free plan are rate limited
