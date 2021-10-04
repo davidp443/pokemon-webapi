@@ -3,7 +3,7 @@ Sample Web API making a connection to pokeapi.co
 
 ## How to run it
 
-The following instructions assume your OS is Windows, Linux or MacOS
+The following instructions assume your OS is Windows, Linux or MacOS.
 For windows users, instructions must be executed in git bash. If using cmd, please replace '/' with '\\' in file paths.
 
 Make sure you have the follwoing installed:
@@ -12,7 +12,7 @@ Make sure you have the follwoing installed:
 - dotnet SDK installed (tested with 5.0.401)
 
 ### Clone the repository:
-git clone https://github.com/davidp443/pokemon-webapi
+`git clone https://github.com/davidp443/pokemon-webapi
 
 
 ### Run the Web API using the development server
