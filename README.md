@@ -62,4 +62,4 @@ For a production system, we should add unit tests to cover more edge cases and e
 Add a cache in front of api.funtranslations.com and pokeapi.co, this will increase availability and reduce the amount of traffic.
 
 ### Use a premium service 
-Use a paid plan for api.funtranslations.com and pokeapi.co, because free plan are rate limited
+Use a paid plan for api.funtranslations.com and pokeapi.co, because free plans are rate limited
