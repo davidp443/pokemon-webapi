@@ -12,13 +12,16 @@ Make sure you have the follwoing installed:
 - dotnet SDK installed (tested with 5.0.401)
 
 ### Clone the repository:
-`git clone https://github.com/davidp443/pokemon-webapi
-
+```
+git clone https://github.com/davidp443/pokemon-webapi
+```
 
 ### Run the Web API using the development server
-cd pokemon-webapi/PokemonWebApi
 
+From the PokemonWebApi.Tests directory, execute:
+```
 docker run
+```
 This will execute a Kestrel development server. 
 
 Using your browser (or curl/ wget), head to https://localhost:5001/pokemon/mewtwo or https://localhost:5001/pokemon/translated/mewtwo 
@@ -29,15 +32,22 @@ Your browser should display a security warning. Add a security exception for the
 Alternately, the Web API can be ran using docker.
 
 Build the image from the root of the git repository:
+```
 docker build -t pokemonwebapi -f PokemonWebApi/Docker file
+```
 
+Create and run the conatainer:
+```
 docker run -p 5000:80 pokemonwebapi
+```
 Using your browser, head to http://localhost:5000/pokemon/mewtwo or https://localhost:5000/pokemon/translated/mewtwo 
 
 ### Run the tests
 
 From the PokemonWebApi.Tests directory, execute
+```
 dotnet test
+```
 
 ## Anything I'd do differently for a production API
 
@@ -50,13 +60,3 @@ Add a caching layer in front of api.funtranslations.com and pokeapi.co
 
 ### Use a premium service 
 Use a paid plan for api.funtranslations.com and pokeapi.co, because free plan are rate limited
-
-
-
-
-
-
-
-
-
-
