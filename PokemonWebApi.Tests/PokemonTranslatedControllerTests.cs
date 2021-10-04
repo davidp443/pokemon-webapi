@@ -79,7 +79,7 @@ namespace PokemonWebApi.Tests
             var response = await sut.GetAsync("blastoise");
 
             // Assert
-            var description = "Created by a scientist after years of horrific gene splicing and dna engineering experiments,  it was.";
+            var description = "'t deliberately maketh itself heavy so 't can with­ standeth the recoil of the water jets 't fires.";
             Assert.AreEqual(description, response.Value.Description);
         }
 
