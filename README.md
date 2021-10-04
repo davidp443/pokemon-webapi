@@ -18,7 +18,7 @@ git clone https://github.com/davidp443/pokemon-webapi
 
 ### Run the Web API using the development server
 
-From the PokemonWebApi.Tests directory, execute:
+From the PokemonWebApi directory, execute:
 ```
 docker run
 ```
